@@ -45,29 +45,40 @@
       <p>You're seeing this because I let you</p>
     </div>
 
-    <div id="temperatureDisplay">
-      <h1>Temperature Display</h1>
+    <h1>Data Display</h1>
+    <div class="data-container">
+      <div class="data-visual" id="temperatureVisual">
+        <div class="thermometer">
+          <h1>Temperature</h1>
+          <div class="fluid" id="fluid"></div>
+        </div>
+        <div class="temperature-label" id="temperatureLabel"></div>
+      </div>
+      <div class="data-visual" id="humidityVisual">
+        <h1>Humidity</h1>
+        <div class="humidity">
+          <div class="humidity-bar" id="humidityBar"></div>
+        </div>
+        <div class="humidity-label" id="humidityLabel"></div>
+      </div>
+    </div>
+
+    
+
       <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
       <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-database-compat.js"></script>
       <script src="index.html"></script>
       <script>
           // Your web app's Firebase configuration
             const firebaseConfig = {
-
               apiKey: "AIzaSyBTfqxmmuPPHPrFrP6HHwhufslo_nFmDeo",
-
               authDomain: "iot-project-8aba5.firebaseapp.com",
-
               databaseURL: "https://iot-project-8aba5-default-rtdb.firebaseio.com",
               // After deploying, view app at [projectId].web.app
               projectId: "iot-project-8aba5",  
-
               storageBucket: "iot-project-8aba5.appspot.com",
-
               messagingSenderId: "1082736731064",
-
               appId: "1:1082736731064:web:58e91dea471104eb8be54d"
-
             };
 
             // Initialize Firebase
@@ -77,34 +88,88 @@
             const database = firebase.database();
 
             // Function to fetch temperature data from Firebase and update HTML
-            function displayTemperature() {
-              const temperatureRef = database.ref('temperature');
-              temperatureRef.on('value', function(snapshot) {
-                  const temperature = snapshot.val();
-                  document.getElementById('temperatureDisplay').innerText = temperature + " °C";
+            // Function to update displayed temperature and fluid level
+            function updateTemperature() {
+                const temperatureRef = database.ref('temperature');
+                temperatureRef.on('value', function(snapshot) {
+                    const temperature = snapshot.val();
+                    document.getElementById('temperatureLabel').innerText = temperature + " °C";
+                    const fluidHeight = temperature * 3; // Adjust this value to fit your scale
+                    document.getElementById('fluid').style.height = fluidHeight + "px";
+                }, function(error) {
+                    console.error("Error fetching temperature:", error);
+                    document.getElementById('temperatureLabel').innerText = "Error fetching temperature";
+                });
+            }
+
+            function updateHumidity() {
+              const humidityRef = database.ref('humidity');
+              humidityRef.on('value', function(snapshot) {
+                const humidity = snapshot.val();
+                document.getElementById('humidityLabel').innerText = humidity + " %"; 
               }, function(error) {
-                  console.error("Error fetching temperature:", error);
-                  document.getElementById('temperatureDisplay').innerText = "Error fetching temperature";
+                console.error("Error fetching humidity:", error);
+                document.getElementById('humidityLabel').innerText = "Error fetching humidity";
               });
             }
 
             // Call displayTemperature function when DOM content is loaded
             document.addEventListener('DOMContentLoaded', function() {
-            displayTemperature();
+              updateTemperature();
+              updateHumidity();
             });
       </script>
-    </div>
+    
     <style>
-      /* Style for temperature display */
-      #temperatureDisplay {
-          font-size: 24px; /* Set font size */
-          font-weight: bold; /* Set font weight */
-          color: #333; /* Set text color */
-          background-color: #f8f8f8; /* Set background color */
-          padding: 10px; /* Add padding */
-          border-radius: 5px; /* Add border radius */
-          text-align: center; /* Center align text */
-          margin-bottom: 20px; /* Add margin */
+      /* Container for data visuals */
+      .data-container {
+        display: flex; /* Use flexbox layout */
+        justify-content: space-around; /* Distribute space evenly between elements */
+        align-items: center; /* Center vertically */
+        margin-top: 20px;
+      }
+
+      /* Styles for each data visual */
+      .data-visual {
+        text-align: center;
+        width: 200px; /* Adjust as needed */
+      }
+
+      /* Thermometer styles */
+      .thermometer, .humidity {
+        width: 100%;
+        height: 400px;
+        background-color: #f0f0f0;
+        border-radius: 15px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* Fluid level for thermometer */
+      .fluid {
+        width: 100%;
+        background-color: #3498db;
+        position: absolute;
+        bottom: 0;
+        transition: height 0.5s ease;
+      }
+
+      /* Temperature and humidity labels */
+      .temperature-label, .humidity-label {
+        font-size: 24px;
+        font-weight: bold;
+        color: #333;
+        text-align: center;
+        margin-top: 20px;
+      }
+
+      /* Humidity bar */
+      .humidity-bar {
+        width: 50px;
+        background-color: #27ae60;
+        position: absolute;
+        bottom: 0;
+        transition: height 0.5s ease;
       }
   </style>
 

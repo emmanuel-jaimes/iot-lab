@@ -29,7 +29,8 @@ firebase.initializeApp(firebaseConfig);
 const database = getDatabase();
 
 const initialDict = {
-    "temperature": 0
+    "temperature": 0,
+    "humidity": 0
 }
 
 //sends contents of dictionary to database
@@ -45,11 +46,12 @@ setInterval(() => {
         }
         // Update temperature and humidity values in db
         update(ref(database), {
-            "temperature": data.temperature
+            "temperature": data.temperature,
+            "humidity": data.humidity 
         }).then(() => {
-            console.log("Temperature data sent to database:", data.temperature);
+            console.log("Temperature and humidity data sent to database:", data.temperature, data.humidity);
         }).catch((error) => {
-            console.error("Error: Failed updating temperature data:", error);
+            console.error("Error: Failed updating temperature and humidity data:", error);
         });
     });
 }, 5000); // 5 second interval
