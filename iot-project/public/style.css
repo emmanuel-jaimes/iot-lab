@@ -1,0 +1,61 @@
+/* Container for data visuals */
+.data-container {
+    display: flex; /* Use flexbox layout */
+    justify-content: space-around; /* Distribute space evenly between elements */
+    align-items: center; /* Center vertically */
+    margin-top: 20px;
+  }
+
+  /* Styles for each data visual */
+  .data-visual {
+    text-align: center;
+    width: 200px; /* Adjust as needed */
+  }
+
+  /* Thermometer styles */
+  .thermometer, .humidity {
+    width: 100%;
+    height: 400px;
+    background-color: #f0f0f0;
+    border-radius: 15px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Fluid level for thermometer */
+  .fluid {
+    width: 100%;
+    background-color: #3498db;
+    position: absolute;
+    bottom: 0;
+    transition: height 0.5s ease;
+  }
+
+  /* Temperature and humidity labels */
+  .temperature-label, .humidity-label, .weather-temperature, .weather-humidity, .weather-description {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  /* Humidity bar */
+  .humidity-bar {
+    width: 100%;
+    background-color: #04fb5e;
+    position: absolute;
+    bottom: 0;
+    transition: height 0.5s ease;
+  }
+
+  /* Weather API styling */
+  input {
+    margin-top: 2rem;
+    padding: 1rem;
+}
+
+.weather_description {
+    color: white;
+    margin-top: 2rem;
+}
