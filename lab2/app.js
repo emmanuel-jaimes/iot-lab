@@ -9,14 +9,14 @@ const { getDatabase, ref, onValue, set, update, get } = require('firebase/databa
 
 // Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCATYjIsbinLsLmzwtbiLYmju3fdq7bqgc",
-  authDomain: "lab2-b6ec4.firebaseapp.com",
-  databaseURL: "https://lab2-b6ec4-default-rtdb.firebaseio.com",
-  projectId: "lab2-b6ec4",
-  storageBucket: "lab2-b6ec4.appspot.com",
-  messagingSenderId: "1079599575147",
-  appId: "1:1079599575147:web:a01e9664e0ff89ccb4412e",
-  measurementId: "G-3M0641J8V6"
+  apiKey: "",
+  authDomain: "",
+  databaseURL: "",
+  projectId: "",
+  storageBucket: "",
+  messagingSenderId: "",
+  appId: "",
+  measurementId: ""
 };
 // Initialize Firebase
 // const analytics = getAnalytics(app);
